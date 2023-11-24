@@ -1,13 +1,13 @@
 
-minetest.register_chatcommand("mars_lightup", {
-	description = "restores the airlights on mars around the player position",
+minetest.register_chatcommand("eclasia_lightup", {
+	description = "restores the airlights on eclasia around the player position",
 	func = function(name)
 		local player = minetest.get_player_by_name(name)
 		local pos = vector.round(player:get_pos())
 
-		if not planet_mars.is_pos_on_mars(pos) then
-			-- TODO: only light up in mars _caves_
-			return false, "You are not on mars!"
+		if not planet_eclasia.is_pos_on_eclasia(pos) then
+			-- TODO: only light up in eclasia _caves_
+			return false, "You are not on eclasia!"
 		end
 
 		local start = minetest.get_us_time()

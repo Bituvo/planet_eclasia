@@ -1,18 +1,18 @@
 -- TODO: figure out a way to _properly_ solve this without abm and vmanip hacks!
 
 -- airlight restoration abm
--- slowly reclaims dark spaces on mars
+-- slowly reclaims dark spaces on eclasia
 minetest.register_abm({
-  label = "mars airlight",
+  label = "eclasia airlight",
   nodenames = {"air"},
-  neighbors = {"planet_mars:airlight"},
+  neighbors = {"planet_eclasia:airlight"},
   interval = 10,
   chance = 100,
   action = function(pos)
 
     -- check coordinates
-    if not planet_mars.is_pos_on_mars(pos) then
-      -- we are not on mars, no replacementsare done here
+    if not planet_eclasia.is_pos_on_eclasia(pos) then
+      -- we are not on eclasia, no replacementsare done here
       return
     end
 
@@ -24,14 +24,14 @@ minetest.register_abm({
       return
     end
 
-    minetest.set_node(pos, {name = "planet_mars:airlight"})
+    minetest.set_node(pos, {name = "planet_eclasia:airlight"})
   end
 })
 
 -- remove airlights near soil nodes
 minetest.register_abm({
-  label = "mars airlight remove near soil",
-  nodenames = {"planet_mars:airlight"},
+  label = "eclasia airlight remove near soil",
+  nodenames = {"planet_eclasia:airlight"},
   neighbors = {"group:soil"},
   interval = 5,
   chance = 50,

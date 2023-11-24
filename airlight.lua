@@ -1,5 +1,5 @@
 
-minetest.register_node("planet_mars:airlight", {
+minetest.register_node("planet_eclasia:airlight", {
 	description = "Air (with light)",
 	inventory_image = "air.png",
 	wield_image = "air.png",

@@ -1,9 +1,9 @@
 local has_skybox_mod = minetest.get_modpath("skybox")
 local has_gravity_manager_mod = minetest.get_modpath("gravity_manager")
 
-local min_y = planet_mars.y_start
-local cave_end_y = planet_mars.y_start + (planet_mars.y_height * 0.97)
-local max_y = planet_mars.y_start + planet_mars.y_skybox_height
+local min_y = planet_eclasia.y_start
+local cave_end_y = planet_eclasia.y_start + (planet_eclasia.y_height * 0.97)
+local max_y = planet_eclasia.y_start + planet_eclasia.y_skybox_height
 
 if has_gravity_manager_mod then
 	gravity_manager.register({
@@ -16,7 +16,7 @@ end
 if has_skybox_mod then
 	skybox.register({
 		-- http://www.custommapmakers.org/skyboxes.php
-		name = "mars",
+		name = "eclasia",
 		miny = cave_end_y,
 		maxy = max_y,
 		always_day = true,
@@ -25,21 +25,21 @@ if has_skybox_mod then
 			color={r=244, g=189, b=114, a=229},
 			ambient={r=0, g=0, b=0, a=255},
 			density=0.4,
-			height=planet_mars.y_start + planet_mars.y_skybox_height - 200,
+			height=planet_eclasia.y_start + planet_eclasia.y_skybox_height - 200,
 			speed={y=-2,x=-2}
 		},
 		textures = {
-			"mars_up.jpg^[transformR270",
-			"mars_dn.jpg^[transformR90",
-			"mars_ft.jpg",
-			"mars_bk.jpg",
-			"mars_lf.jpg",
-			"mars_rt.jpg"
+			"eclasia_up.jpg^[transformR270",
+			"eclasia_dn.jpg^[transformR90",
+			"eclasia_ft.jpg",
+			"eclasia_bk.jpg",
+			"eclasia_lf.jpg",
+			"eclasia_rt.jpg"
 		}
 	})
 
 	skybox.register({
-		name = "mars_cave",
+		name = "eclasia_cave",
 		miny = min_y,
 		maxy = cave_end_y,
 		always_day = true,

@@ -1,6 +1,6 @@
 
 globals = {
-	"planet_mars",
+	"planet_eclasia",
 	"planetoids",
 	"vacuum",
 	"skybox"
