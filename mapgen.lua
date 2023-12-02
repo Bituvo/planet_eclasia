@@ -70,7 +70,3 @@ minetest.register_on_generated(function(minp, maxp)
     vm:set_lighting({day=15, night=0})
     vm:write_to_map()
 end)
-
-minetest.register_on_punchnode(function(pos)
-    minetest.chat_send_all(minetest.pos_to_string(pos))
-end)
