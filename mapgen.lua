@@ -58,6 +58,9 @@ minetest.register_on_generated(function(minp, maxp)
                     
                     elseif y <= terrain_y then
                         data[index] = C_STONE
+                    
+                    elseif y <= planet_eclasia.start_y + 55 then
+                        data[index] = C_WATER
                     end
                 end
             end
