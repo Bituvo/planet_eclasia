@@ -4,7 +4,9 @@ planet_eclasia = {
 }
 
 local MP = minetest.get_modpath("planet_eclasia")
+dofile(MP.."/api.lua")
 dofile(MP.."/vacuum.lua")
+dofile(MP.."/decorations.lua")
 dofile(MP.."/mapgen.lua")
 dofile(MP.."/skybox.lua")
 

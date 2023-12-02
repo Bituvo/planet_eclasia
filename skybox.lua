@@ -1,7 +1,7 @@
 gravity_manager.register({
 	miny = planet_eclasia.start_y,
 	maxy = planet_eclasia.start_y + planet_eclasia.height,
-	gravity = 0.7
+	gravity = 0.6
 })
 
 skybox.register({
