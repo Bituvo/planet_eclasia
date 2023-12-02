@@ -1,21 +1,13 @@
-Planet eclasia mod for minetest
-
-
-# Overview
-
-A eclasia planetary layer with underground caves
+Planet Eclasia mod for Minetest
 
 # Mapgen
 
-Mapgen defaults to y 5000 to 11	000
+Mapgen defaults to y 20,000 to 25,000
 
-# Compatibility
+
+# Depends
 
 * vacuum
 * bedrock
 * skybox
 * gravity_manager
-
-# License
-
-* textures/planet_eclasia_*marble https://forum.minetest.net/viewtopic.php?t=12798
