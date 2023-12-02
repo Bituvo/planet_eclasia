@@ -1,12 +1,15 @@
+local ground_height = planet_eclasia.start_y + 60
+local water_height = planet_eclasia.start_y + 55
+
 local main_height_params = {
-    offset = planet_eclasia.start_y + 60,
+    offset = ground_height,
     scale = 10,
     spread = {x=280, y=280, z=280},
     seed = 1
 }
 
 local hill_height_params = {
-    offset = planet_eclasia.start_y + 60,
+    offset = ground_height,
     scale = 15,
     spread = {x=150, y=150, z=150},
     octaves = 4,
@@ -16,6 +19,7 @@ local hill_height_params = {
 }
 
 local C_STONE = minetest.get_content_id("default:stone")
+local C_SAND = minetest.get_content_id("default:sand")
 local C_WATER = minetest.get_content_id("default:water_source")
 local C_BEDROCK = C_STONE
 
@@ -27,7 +31,7 @@ local main_height_perlin_map = {}
 local hill_height_perlin_map = {}
 
 minetest.register_on_generated(function(minp, maxp)
-    if minp.y > planet_eclasia.start_y + 60 or maxp.y < planet_eclasia.start_y then
+    if minp.y > ground_height or maxp.y < planet_eclasia.start_y then
         return
     end
 
@@ -57,9 +61,13 @@ minetest.register_on_generated(function(minp, maxp)
                         data[index] = C_BEDROCK
 
                     elseif y <= terrain_y then
-                        data[index] = C_STONE
+                        if y > terrain_y - 3 and terrain_y < water_height then
+                            data[index] = C_SAND
+                        else
+                            data[index] = C_STONE
+                        end
 
-                    elseif y <= planet_eclasia.start_y + 55 then
+                    elseif y <= water_height then
                         data[index] = C_WATER
                     end
                 end
@@ -72,4 +80,8 @@ minetest.register_on_generated(function(minp, maxp)
     vm:set_data(data)
     vm:set_lighting({day=15, night=0})
     vm:write_to_map()
+end)
+
+minetest.register_on_punchnode(function(pos)
+    minetest.chat_send_all(minetest.pos_to_string(pos))
 end)
