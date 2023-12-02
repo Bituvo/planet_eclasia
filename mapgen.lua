@@ -1,13 +1,13 @@
 local main_height_params = {
-	offset = planet_eclasia.start_y + planet_eclasia.crust_height * 2,
+	offset = planet_eclasia.start_y + 60,
 	scale = 10,
 	spread = {x=280, y=280, z=280},
     seed = 1
 }
 
 local hill_height_params = {
-	offset = planet_eclasia.start_y + planet_eclasia.crust_height * 2,
-	scale = planet_eclasia.terrain_height / 2,
+	offset = planet_eclasia.start_y + 60,
+	scale = 15,
 	spread = {x=150, y=150, z=150},
     octaves = 4,
     persistence = 0.7,
@@ -27,7 +27,7 @@ local main_height_perlin_map = {}
 local hill_height_perlin_map = {}
 
 minetest.register_on_generated(function(minp, maxp)
-    if minp.y > planet_eclasia.start_y + planet_eclasia.crust_height + planet_eclasia.terrain_height or maxp.y < planet_eclasia.start_y then
+    if minp.y > planet_eclasia.start_y + 60 or maxp.y < planet_eclasia.start_y then
         return
     end
 
@@ -53,7 +53,7 @@ minetest.register_on_generated(function(minp, maxp)
                 if y >= planet_eclasia.start_y then
                     local index = area:index(x, y, z)
 
-                    if y <= planet_eclasia.start_y then
+                    if y == planet_eclasia.start_y then
                         data[index] = C_BEDROCK
                     
                     elseif y <= terrain_y then
