@@ -34,6 +34,18 @@ local C_ICE = minetest.get_content_id("default:ice")
 local main_height_perlin_map = {}
 local hill_height_perlin_map = {}
 
+local function get_top_sections(biome)
+    if biome == "ice" then
+        return C_ICE, C_ICE
+    elseif biome == "grass" then
+        return C_GRASS, C_DIRT
+    elseif biome == "crystal" then
+        return C_CRYSTAL_DIRT, C_DIRT
+    end
+    
+    return C_STONE, C_STONE
+end
+
 minetest.register_on_generated(function(minp, maxp)
     if minp.y > ground_height or maxp.y < planet_eclasia.start_y then
         return
@@ -41,7 +53,7 @@ minetest.register_on_generated(function(minp, maxp)
 
     local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
     local area = VoxelArea:new{MinEdge=emin, MaxEdge=emax}
-    local data = vm:get_data()
+    local map = vm:get_data()
 
     local side_length = maxp.x - minp.x + 1
     local map_lengths_xyz = {x=side_length, y=side_length, z=side_length}
@@ -55,43 +67,35 @@ minetest.register_on_generated(function(minp, maxp)
 
     for z = minp.z, maxp.z do
         for x = minp.x, maxp.x do
-            local terrain_y = math.max(main_height_perlin_map[index], hill_height_perlin_map[index])
+            local main_terrain_height = main_height_perlin_map[index]
+            local hill_terrain_height = hill_height_perlin_map[index]
+            local terrain_y = math.floor(math.max(main_terrain_height, hill_terrain_height))
+
             local biome = planet_eclasia.get_biome(x, z)
-
-            local top_layer
-            local filler = C_DIRT
-
-            if biome == "ice" then
-                top_layer = C_ICE
-                filler = C_ICE
-            elseif biome == "stone" then
-                top_layer = C_STONE
-                filler = C_STONE
-            elseif biome == "crystal" then
-                top_layer = C_CRYSTAL_DIRT
-            else
-                top_layer = C_GRASS
-            end
+            local top_layer, filler = get_top_sections(biome)
 
             for y = minp.y, maxp.y do
                 if y >= planet_eclasia.start_y then
-                    local index = area:index(x, y, z)
+                    local position = area:index(x, y, z)
 
                     if y == planet_eclasia.start_y then
-                        data[index] = C_BEDROCK
+                        map[position] = C_BEDROCK
 
                     elseif y <= terrain_y then
                         if y <= terrain_y - 3 then
-                            data[index] = C_STONE
+                            map[position] = C_STONE
                         elseif y > terrain_y - 3 and terrain_y < water_height then
-                            data[index] = C_SAND
+                            map[position] = C_SAND
                         else
-                            if y == math.floor(terrain_y) then data[index] = top_layer
-                            elseif y > terrain_y - 3 then data[index] = filler end
+                            if y == terrain_y then
+                                map[position] = top_layer
+                            elseif y > terrain_y - 3 then
+                                map[position] = filler
+                            end
                         end
 
                     elseif y <= water_height then
-                        data[index] = C_WATER
+                        map[position] = C_WATER
                     end
                 end
             end
