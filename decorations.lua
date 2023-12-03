@@ -2,6 +2,8 @@ local default_schematics = minetest.get_modpath("default") .. "/schematics/"
 local y_min = planet_eclasia.start_y
 local y_max = y_min + planet_eclasia.height
 
+-- Crystal biome
+
 minetest.register_decoration({
     deco_type = "schematic",
     place_on = "ethereal:crystal_dirt",
@@ -41,6 +43,8 @@ minetest.register_decoration({
     y_min = y_min,
     y_max = y_max,
 })
+
+-- Grass biome
 
 minetest.register_decoration({
     deco_type = "schematic",

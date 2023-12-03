@@ -1,6 +1,7 @@
 local ground_height = planet_eclasia.start_y + 60
 local water_height = planet_eclasia.start_y + 55
 
+-- Smooth, mostly flat terrain that serves as a base
 local main_height_params = {
     offset = ground_height,
     scale = 10,
@@ -8,6 +9,7 @@ local main_height_params = {
     seed = 1
 }
 
+-- Hilly terrain that protrudes out of the flat landscape
 local hill_height_params = {
     offset = ground_height,
     scale = 15,
@@ -34,6 +36,7 @@ local C_ICE = minetest.get_content_id("default:ice")
 local main_height_perlin_map = {}
 local hill_height_perlin_map = {}
 
+-- Get the top layer and bottom filler of the surface for a biome
 local function get_top_sections(biome)
     if biome == "ice" then
         return C_ICE, C_ICE
@@ -78,18 +81,22 @@ minetest.register_on_generated(function(minp, maxp)
                 if y >= planet_eclasia.start_y then
                     local position = area:index(x, y, z)
 
-                    if y == planet_eclasia.start_y then
+                    if y == planet_eclasia.start_y and math.random(1, 5) < 5 then
+                        -- Mostly bedrock at the bottom
                         map[position] = C_BEDROCK
 
                     elseif y <= terrain_y then
                         if y <= terrain_y - 3 then
+                            -- Mostly stone after three blocks
                             map[position] = C_STONE
                         elseif y > terrain_y - 3 and terrain_y < water_height then
+                            -- Three blocks of sand under water
                             map[position] = C_SAND
                         else
                             if y == terrain_y then
                                 map[position] = top_layer
-                            elseif y > terrain_y - 3 then
+                            elseif y >= terrain_y - 2 then
+                                -- Two blocks of filler
                                 map[position] = filler
                             end
                         end
@@ -104,7 +111,7 @@ minetest.register_on_generated(function(minp, maxp)
         end
     end
 
-    vm:set_data(data)
+    vm:set_data(map)
     minetest.generate_decorations(vm)
     vm:set_lighting({day=15, night=0})
     vm:write_to_map()
