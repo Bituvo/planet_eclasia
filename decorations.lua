@@ -44,6 +44,15 @@ minetest.register_decoration({
     y_max = y_max,
 })
 
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = "ethereal:crystal_dirt",
+    decoration = "ethereal:crystal_block",
+    fill_ratio = 1 / 4000,
+    y_min = y_min,
+    y_max = y_max
+})
+
 -- Grass biome
 
 minetest.register_decoration({
