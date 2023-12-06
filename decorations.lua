@@ -29,8 +29,8 @@ register(true, "ethereal:crystal_dirt", 1 / 2000, ethereal.yellowtree)
 register(true, "ethereal:crystal_dirt", 1 / 1500, ethereal.frosttrees)
 
 register(false, "ethereal:crystal_dirt", 1 / 50, "ethereal:crystalgrass")
-register(false, "ethereal:crystal_spike", 1 / 350, "ethereal:crystalgrass")
-register(false, "ethereal:crystal_block", 1 / 4000, "ethereal:crystalgrass")
+register(false, "ethereal:crystal_dirt", 1 / 350, "ethereal:crystal_spike")
+register(false, "ethereal:crystal_dirt", 1 / 3000, "ethereal:crystal_block")
 
 -- Grass biome
 
