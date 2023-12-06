@@ -33,6 +33,30 @@ local C_GRASS = minetest.get_content_id("default:dirt_with_grass")
 local C_CRYSTAL_DIRT = minetest.get_content_id("ethereal:crystal_dirt")
 local C_ICE = minetest.get_content_id("default:ice")
 
+local C_CRYSTAL_BLOCK = minetest.get_content_id("ethereal:crystal_block")
+local C_COAL = minetest.get_content_id("default:stone_with_coal")
+local C_DIAMOND = minetest.get_content_id("default:stone_with_diamond")
+local C_MESE = minetest.get_content_id("default:stone_with_mese")
+
+local C_CHERNOBYLITE = C_STONE
+local C_MARBLE = C_STONE
+local C_GRANITE = C_STONE
+if minetest.get_modpath("technic") then
+    C_CHERNOBYLITE = minetest.get_content_id("technic:chernobylite_block")
+    C_MARBLE = minetest.get_content_id("technic:marble")
+    C_GRANITE = minetest.get_content_id("technic:granite")
+
+    -- Prevent rubber trees from spawning
+    local old_spawn_tree = minetest.spawn_tree
+    function minetest.spawn_tree(pos, tree)
+        if tree == technic.rubber_tree_model and pos.y >= planet_eclasia.start_y and pos.y <= planet_eclasia.start_y + planet_eclasia.height then
+            return
+        end
+
+        return old_spawn_tree(pos, tree)
+    end
+end
+
 local main_height_perlin_map = {}
 local hill_height_perlin_map = {}
 
@@ -87,8 +111,50 @@ minetest.register_on_generated(function(minp, maxp)
 
                     elseif y <= terrain_y then
                         if y <= terrain_y - 3 then
-                            -- Mostly stone after three blocks
-                            map[position] = C_STONE
+                            -- Generate ores
+                            if biome == "crystal" then
+                                if math.random(1, 50) == 1 then
+                                    map[position] = C_COAL
+                                elseif math.random(1, 800) == 1 then
+                                    map[position] = C_CRYSTAL_BLOCK
+                                end
+
+                            elseif biome == "ice" then
+                                if y >= planet_eclasia.start_y + 20 and y <= planet_eclasia.start_y + 25 then
+                                    map[position] = C_WATER
+                                elseif math.random(1, 60) == 1 then
+                                    map[position] = C_COAL
+                                elseif math.random(1, 30) == 1 then
+                                    map[position] = C_ICE
+                                end
+                            
+                            elseif biome == "grass" then
+                                if math.random(1, 30) == 1 then
+                                    map[position] = C_COAL
+                                elseif y < planet_eclasia.start_y + 30 then
+                                    if math.random(1, 30) == 1 then
+                                        map[position] = C_DIAMOND
+                                    elseif math.random(1, 50) == 1 then
+                                        map[position] = C_MESE
+                                    end
+                                end
+                            
+                            elseif biome == "stone" then
+                                if math.random(1, 30) == 1 then
+                                    map[position] = C_MARBLE
+                                elseif math.random(1, 30) == 1 then
+                                    map[position] = C_GRANITE
+                                elseif y < planet_eclasia.start_y + 30 then
+                                    if math.random(1, 20) == 1 then
+                                        map[position] = C_CHERNOBYLITE
+                                    end
+                                end
+                            end
+
+                            if map[position] == minetest.CONTENT_AIR then
+                                map[position] = C_STONE
+                            end
+
                         elseif y > terrain_y - 3 and terrain_y < water_height then
                             -- Three blocks of sand under water
                             map[position] = C_SAND
