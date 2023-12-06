@@ -37,5 +37,5 @@ register(false, "ethereal:crystal_dirt", 1 / 3000, "ethereal:crystal_block")
 register(true, "default:dirt_with_grass", 1 / 500, default_schematics .. "apple_tree_from_sapling.mts")
 
 for i = 1, 4 do
-    register(false, "default_dirt_with_grass", 1 / 20, "default:grass_" .. i)
+    register(false, "default:dirt_with_grass", 1 / 20, "default:grass_" .. i)
 end
