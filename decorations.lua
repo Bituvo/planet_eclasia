@@ -2,77 +2,40 @@ local default_schematics = minetest.get_modpath("default") .. "/schematics/"
 local y_min = planet_eclasia.start_y
 local y_max = y_min + planet_eclasia.height
 
+local function register(is_schematic, on, chance, decoration)
+    local definition = {
+        place_on = on,
+        rotation = "random",
+        flags = "place_center_x, place_center_z",
+        fill_ratio = chance,
+        y_min = y_min,
+        y_max = y_max
+    }
+
+    if is_schematic then
+        definition.deco_type = "schematic"
+        definition.schematic = decoration
+    else
+        definition.deco_type = "simple"
+        definition.decoration = decoration
+    end
+
+    minetest.register_decoration(definition)
+end
+
 -- Crystal biome
 
-minetest.register_decoration({
-    deco_type = "schematic",
-    place_on = "ethereal:crystal_dirt",
-    rotation = "random",
-    flags = "place_center_x, place_center_z",
-    fill_ratio = 1 / 2000,
-    y_min = y_min,
-    y_max = y_max,
-    schematic = ethereal.yellowtree
-})
+register(true, "ethereal:crystal_dirt", 1 / 2000, ethereal.yellowtree)
+register(true, "ethereal:crystal_dirt", 1 / 1500, ethereal.frosttrees)
 
-minetest.register_decoration({
-    deco_type = "schematic",
-    place_on = "ethereal:crystal_dirt",
-    rotation = "random",
-    flags = "place_center_x, place_center_z",
-    fill_ratio = 1 / 1500,
-    y_min = y_min,
-    y_max = y_max,
-    schematic = ethereal.frosttrees
-})
-
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "ethereal:crystal_dirt",
-    decoration = "ethereal:crystalgrass",
-    fill_ratio = 1 / 50,
-    y_min = y_min,
-    y_max = y_max,
-})
-
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "ethereal:crystal_dirt",
-    decoration = "ethereal:crystal_spike",
-    fill_ratio = 1 / 350,
-    y_min = y_min,
-    y_max = y_max,
-})
-
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "ethereal:crystal_dirt",
-    decoration = "ethereal:crystal_block",
-    fill_ratio = 1 / 4000,
-    y_min = y_min,
-    y_max = y_max
-})
+register(false, "ethereal:crystal_dirt", 1 / 50, "ethereal:crystalgrass")
+register(false, "ethereal:crystal_spike", 1 / 350, "ethereal:crystalgrass")
+register(false, "ethereal:crystal_block", 1 / 4000, "ethereal:crystalgrass")
 
 -- Grass biome
 
-minetest.register_decoration({
-    deco_type = "schematic",
-    place_on = "default:dirt_with_grass",
-    rotation = "random",
-    flags = "place_center_x, place_center_z",
-    fill_ratio = 1 / 500,
-    y_min = y_min,
-    y_max = y_max,
-    schematic = default_schematics .. "apple_tree_from_sapling.mts"
-})
+register(true, "default:dirt_with_grass", 1 / 500, default_schematics .. "apple_tree_from_sapling.mts")
 
 for i = 1, 4 do
-    minetest.register_decoration({
-        deco_type = "simple",
-        place_on = "default:dirt_with_grass",
-        decoration = "default:grass_" .. i,
-        fill_ratio = 1 / 20,
-        y_min = y_min,
-        y_max = y_max,
-    })
+    register(false, "default_dirt_with_grass", 1 / 20, "default:grass_" .. i)
 end
