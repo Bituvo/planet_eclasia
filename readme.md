@@ -1,13 +1,14 @@
-Planet Eclasia mod for Minetest
+Planet Eclasia mod for Luanti
 
 # Mapgen
 
-Mapgen defaults to y 20,000 to 25,000
+Mapgen defaults from Y=20,000 to Y=21,000
+
 
 
 # Depends
 
-* vacuum
-* bedrock
-* skybox
-* gravity_manager
+* [vacuum](https://github.com/mt-mods/vacuum)
+* [bedrock](https://github.com/Calinou/bedrock)
+* [skybox](https://github.com/pandorabox-io/skybox)
+* [gravity_manager](https://github.com/pandorabox-io/gravity_manager)
